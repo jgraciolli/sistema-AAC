@@ -11,7 +11,7 @@ Um vídeo de exemplo que demonstra a evolução de sistemas AAC ao longo dos ano
 
 Um aplicativo de AAC com comandos extremamente simples,
 
-# O que o app possui?
+## O que o app possui?
 
 - divido por categoria, 
 - instruções muito claras
