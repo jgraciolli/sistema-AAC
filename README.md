@@ -7,11 +7,13 @@ Um vídeo de exemplo que demonstra a evolução de sistemas AAC ao longo dos ano
 
 # Análise do app Papuguinho
 
+Link do app: https://estudio.papuguinho.com/
+
 ## O que faz o app do papuguinho?
 
 Um aplicativo de AAC com comandos extremamente simples,
 
-# O que o app possui?
+## O que o app possui?
 
 - divido por categoria, 
 - instruções muito claras
