@@ -25,7 +25,22 @@
 
 Link do app: https://estudio.papuguinho.com/
 
-## O que faz o app do papuguinho?
+# Tecnologias utilizadas
+
+## Linguagem
+
+- Java
+
+## Bibliotecas
+
+- JaxaFx 
+- //TODO: pesquisar biblioteca capaz de reproduzir uma palavra
+- //TODO: pesquisar IA capaz de gerar imagens com base em palavras
+
+
+## Armazenamento
+
+- No momento está sendo utilizado memória local (txt)
 
 # Exemplos de referência 
 
