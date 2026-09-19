@@ -1,18 +1,22 @@
-import java.util.scanner;
-
+import java.util.Scanner;
+import utils.FileHelper;
 
 public class Main {
     public static void main(String[] args) {
         //TODO: criar objeto frase -> esse objeto será o responsável por receber as palavras
+        FileHelper _fileHelper = new FileHelper();
 
+        String nome_do_arquivo = "Arquivo 1";
+
+        _fileHelper.criarArquivo(nome_do_arquivo);
     }
 
-    criarPrancha(){
+    void criarPrancha(){
         //TODO: criar objeto da prancha
         //TODO: armazenar em novo ARQUIVO prancha
     }
 
-    editarPrancha(){
+    void editarPrancha(){
         //TODO: criar novo objeto de prancha
         //TODO: (parametro) receber nome da prancha
         //TODO: localizar ultimo objeto da prancha no ARQUIVO
@@ -20,17 +24,17 @@ public class Main {
         //TODO: escrever novo objeto abaixo da ultima linha do ARQUIVO
     }
 
-    excluirPrancha(){
+    void excluirPrancha(){
         //TODO: (parametro) receber nome da prancha
         //TODO: excluir ARQUIVO prancha
     }
 
-    criarCard(){
+    void criarCard(){
         //TODO: criar objeto de card
         //TODO: armazenar em novo ARQUIVO card
     }
 
-    editarCard(){
+    void editarCard(){
         //TODO: criar novo objeto de card
         //TODO: (parametro) receber nome do card
         //TODO: localizar ultimo objeto de card no ARQUIVO
@@ -38,16 +42,16 @@ public class Main {
         //TODO: escrever novo objeto abaixo da ultima linha do ARQUIVO
     }
 
-    excluirCard(){
+    void excluirCard(){
         //TODO: (parametro) receber nome do card
         //TODO: excluir ARQUIVO card
     }
 
-    reproduzirPalavra(){
+    void reproduzirPalavra(){
         //DOCS: pesquisar biblioteca capaz de reproduzir uma palavra
     }
 
-    reordenarCardsNaPrancha(){
+    void reordenarCardsNaPrancha(){
         //TODO: (parametro) receber card que deseja mudar
         //TODO: (parametro) receber novo indice
         //TODO: consultar todos os ARQUIVOS dessa prancha
@@ -56,11 +60,11 @@ public class Main {
         //TODO: (foreach) para cada card da lista gravar em seu respectivo arquivo (utilizar nome do objeto como chave)
     }
 
-    gerarImagensComBaseNasPalavras(){
+    void gerarImagensComBaseNasPalavras(){
         //DOCS: pesquisar IA capaz de gerar imagens com base em palavras
     }
 
-    atribuirImagemAoCard(){
+    void atribuirImagemAoCard(){
         //TODO: (parametro) receber nome do card
         //TODO: atualizar nome da imagem com base no card
         //OBS: (nome_imagem)_(data_atual)_(nome_card).(tipo_imagem)
@@ -68,18 +72,18 @@ public class Main {
 
     //OBS: Construir frase -> Adicionar palavra do card a frase
 
-    adicionarPalavraDoCardAFrase(){
+    void adicionarPalavraDoCardAFrase(){
         //UI: esse método deve ser chamado ao clicar em qualquer lugar no card de palavra
         //TODO: receber palavra do card selecionado
         //TODO: retornar palavra
     }
 
-    reproduzirFrase(){
+    void reproduzirFrase(){
         //DOCS: pesquisar IA capaz de gerar imagens com base em palavras
     }
 }
 
-public class CardPalavra{
+class CardPalavra{
     String categoria;
     String palavra;
     String imagem; //TODO: desenvolver objeto de imagem
@@ -88,6 +92,6 @@ public class CardPalavra{
     Prancha prancha;
 }
 
-public class Prancha{
-    nome;
+class Prancha{
+    String nome;
 }
