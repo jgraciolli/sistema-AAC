@@ -18,9 +18,11 @@ E2 - Prancha
 ## Requisitos funcionais
 
 RF1 - Criar prancha
+RF2 - Visualizar prancha
 RF2 - Editar prancha
 RF3 - Excluir prancha
 RF4 - Criar card e atribuir a uma prancha
+RF5 - Visualizar prancha
 RF5 - Editar card
 RF6 - Excluir card
 RF7 - Reproduzir palavra

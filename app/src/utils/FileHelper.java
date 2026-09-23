@@ -1,48 +1,72 @@
 package utils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class FileHelper{
 
-    File _arquivo;
+    String _nomeArquivo;
 
-    public FileHelper(File arquivo){
-        _arquivo = arquivo;
+    public FileHelper(String nomeArquivo){
+        _nomeArquivo = nomeArquivo;
     }
 
     //TODO: implementar biblioteca file
 
     public void criarArquivo() {
         try {
-            var arquivoExiste = _arquivo.createNewFile();
-            if(arquivoExiste) {
-                System.out.println("Arquivo: " + _arquivo.getName() + " já existe");
+            File arquivo = new File(_nomeArquivo);
+            var resultado = arquivo.createNewFile();
+            if(!resultado) {
+                System.out.println("Arquivo: " + _nomeArquivo + " já existe");
+            }else{
+                System.out.println("Arquivo criado com sucesso");
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.print("Erro ao criar arquivo: " + e.getMessage());
         }
     }
 
     public void excluirArquivo(){
         //TODO: excluir arquivo
-        _arquivo.delete();
+        File arquivo = new File(_nomeArquivo);
+        try {
+            var resultado = arquivo.delete();
+            if(resultado){
+               System.out.println("Arquivo excluído com sucesso");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void escreverConteudoArquivo(){
-        //TODO: verificar se arquivo existe
-        //TODO: buscar por nome do arquivo
-        //TODO: abrir arquivo
-        //TODO: verificar se o conteúdo está vazio
-        //TODO: (insert) adicionar texto abaixo da última linha do arquivo
+    public <T> void escreverConteudoArquivo(List<String> conteudoArquivo){
+        try (PrintWriter writer = new PrintWriter(new FileWriter(_nomeArquivo))){
+            for (String s : conteudoArquivo) {
+                //TODO: guardar chave e valor
+                writer.print(s);
+            }
+            writer.println();
+            writer.print("+");
+        }catch (IOException e){
+            System.out.print("Erro ao escrever o conteúdo do arquivo: " + e.getMessage());
+        }
     }
 
-    public void consultarConteudoArquivo(){
-        //TODO: verificar se o arquivo existe
-        //TODO: buscar por nome do arquivo
-        //TODO: abrir arquivo
-        //TODO: guardar em memória conteúdo do arquivo
-        //TODO: (return) retornar arquivo
+    public List<String> consultarConteudoArquivo(){
+        List<String> linhasArquivo = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(_nomeArquivo))){
+            String linha;
+            while ((linha = reader.readLine()) != null){
+                linhasArquivo.add(linha);
+            }
+            return linhasArquivo;
+        }catch (IOException e){
+            System.out.print("Erro ao consultar arquivo" + e.getMessage());
+        }
+        return linhasArquivo;
     }
 
     public void consultarConteudoVariosArquivos(){
