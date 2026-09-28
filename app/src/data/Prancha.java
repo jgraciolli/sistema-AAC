@@ -23,10 +23,10 @@ public class Prancha{
         this.dataHoraCriacao = new DateTimeHelper().buscarDataHoraAtual();
     }
 
+    //TODO: adicionar propriedades restantes
     public Prancha(String nomeArquivo, int numeroPrancha){
         this.numeroPrancha = numeroPrancha;
-        this.nomeArquivo = "Prancha_"+numeroPrancha;
-        this.nomePrancha = nomeArquivo.replace("Prancha_", "") ;
+        this.nomeArquivo = nomeArquivo;
         this.dataHoraCriacao = new DateTimeHelper().buscarDataHoraAtual();
     }
 

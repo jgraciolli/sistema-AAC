@@ -1,4 +1,6 @@
-# sistema-AAC
+# Sistema AAC CALOPSITO
+
+## O que é um sistema-AAC
 - Um sistema AAC é aquele que permite com que pessoas com dificuldade para se comunicar possam expressar aquilo que querem dizer de uma forma alternativa .
 - Pode encobrir diferentes tipos de deficiência.
 - É um sistema que segue um conjunto de instruções as traduzindo para alguma linguagem

@@ -1,28 +1,28 @@
 package repositories;
 
 import data.Prancha;
+import interfaces.PranchaInterface;
 import utils.FileHelper;
 
 import java.util.*;
 
-public class PranchaRepository {
+public class PranchaRepository implements PranchaInterface {
 
     FileHelper _fileHelper;
-    Prancha _prancha;
+    Prancha _pranchaSelecionada;
     String caminho = "pranchas";
-    PranchasRepository pranchasRepository;
 
     public PranchaRepository(Prancha prancha){
-        pranchasRepository = new PranchasRepository();
-        _prancha = new Prancha(pranchasRepository.definirNumeroPranchaAutomaticamente(), prancha.nomePrancha); //TODO: criar nome arquivo da prancha com base em um contador
-        _fileHelper = new FileHelper(caminho, _prancha.nomeArquivo);
+        int numeroPrancha = new PranchasRepository().definirNumeroPranchaAutomaticamente();
+        _pranchaSelecionada = new Prancha(numeroPrancha, prancha.nomePrancha);
+        _fileHelper = new FileHelper(caminho, _pranchaSelecionada.nomeArquivo);
     };
 
     public void criarPrancha(){
         if (!_fileHelper.arquivoExiste()) {
             _fileHelper.criarArquivo();
             //RN: apenas a primeira escrita
-            List<String> listaPrancha = new Prancha().converterPranchaParaString(_prancha);
+            List<String> listaPrancha = new Prancha().converterPranchaParaString(_pranchaSelecionada);
             _fileHelper.escreverConteudoArquivo(listaPrancha);
         }else{
             System.out.print("Prancha já existe");
@@ -40,7 +40,7 @@ public class PranchaRepository {
     }
 
     public void atualizarPrancha(){
-        List<String> listaPrancha = new Prancha().converterPranchaParaString(_prancha);
+        List<String> listaPrancha = new Prancha().converterPranchaParaString(_pranchaSelecionada);
         _fileHelper.escreverConteudoArquivo(listaPrancha);
     }
 
@@ -57,5 +57,4 @@ public class PranchaRepository {
     String consultarNomePrancha(){
         return _fileHelper.consultarPropriedadesDoArquivo().getName();
     }
-
 }

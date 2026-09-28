@@ -1,46 +1,50 @@
 package repositories;
 
 import data.Prancha;
+import interfaces.PranchasInterface;
 import utils.FileHelper;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PranchasRepository {
+public class PranchasRepository implements PranchasInterface {
 
     List<Prancha> _pranchas;
-    PranchaRepository pranchaRepository;
-    FileHelper _fileHelper;
     String _caminho = "pranchas";
+    FileHelper _fileHelper = new FileHelper(_caminho);
 
-    PranchasRepository(){//TODO: listar todos os arquivos existentes em determinado caminho
-        _fileHelper = new FileHelper(_caminho);
-        _pranchas = new ArrayList<>();
-        converterArquivosParaPranchas();
+    public PranchasRepository(){
+        _pranchas = buscarPranchasLocais();
     }
 
-    List<Prancha> consultarVariasPranchas(){
+    public List<Prancha> carregarTodasPranchas(){
         return _pranchas;
     }
 
-    Prancha consultarPranchaComBaseNoNumero(int numero){
+    public Prancha consultarPranchaComBaseNoNumero(int numero){
         return _pranchas.get(numero);
     }
 
-    int definirNumeroPranchaAutomaticamente(){
-        return _pranchas.getLast().numeroPrancha + 1;
+    //TODO: corrigir valor
+    public int definirNumeroPranchaAutomaticamente(){
+        if (_pranchas.isEmpty()) return 0;
+        return _pranchas.size() + 1;
     }
 
-    int contarQuantidadeDePranchas(){
+    public int contarQuantidadeDePranchas(){
         return _pranchas.size();
     }
 
-    void converterArquivosParaPranchas(){
+    List<Prancha> buscarPranchasLocais(){
+        List<Prancha> pranchas = new ArrayList<>();
         File[] files = _fileHelper.consultarVariosArquivos();
         for (var file : files){
-            var prancha = new Prancha(file.getName(), Integer.parseInt(file.getName().replaceAll("\\D", "")));
-            _pranchas.add(prancha);
+            _fileHelper = new FileHelper(_caminho, file.getName());
+            List<String> listaString = _fileHelper.consultarConteudoAtualArquivo();
+            Prancha prancha = new Prancha().converterStringParaPrancha(listaString);
+            pranchas.add(prancha);
         }
+        return pranchas;
     }
 }
