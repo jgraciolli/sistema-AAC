@@ -3,26 +3,32 @@ package repositories;
 import data.Prancha;
 import interfaces.PranchaInterface;
 import utils.FileHelper;
+import utils.FilesHelper;
 
 import java.util.*;
 
 public class PranchaRepository implements PranchaInterface {
 
     FileHelper _fileHelper;
-    Prancha _pranchaSelecionada;
-    String caminho = "pranchas";
+    FilesHelper _filesHelper;
+    String _caminho = "pranchas";
+    String _pastaPrancha;
+    Prancha _prancha;
 
     public PranchaRepository(Prancha prancha){
-        int numeroPrancha = new PranchasRepository().definirNumeroPranchaAutomaticamente();
-        _pranchaSelecionada = new Prancha(numeroPrancha, prancha.nomePrancha);
-        _fileHelper = new FileHelper(caminho, _pranchaSelecionada.nomeArquivo);
-    };
+        _filesHelper = new FilesHelper(_caminho);
+        _prancha = new Prancha(_filesHelper.definirNumeroObjetoAutomaticamente(), prancha.nomePrancha);
+        _fileHelper = new FileHelper(_caminho, _prancha.nomeArquivo);
+
+    }
 
     public void criarPrancha(){
         if (!_fileHelper.arquivoExiste()) {
             _fileHelper.criarArquivo();
+            _filesHelper = new FilesHelper("cardsPalavras\\\\"  + _prancha.nomeArquivo);
+            _filesHelper.criarPasta();
             //RN: apenas a primeira escrita
-            List<String> listaPrancha = new Prancha().converterPranchaParaString(_pranchaSelecionada);
+            List<String> listaPrancha = new Prancha().converterPranchaParaString(_prancha);
             _fileHelper.escreverConteudoArquivo(listaPrancha);
         }else{
             System.out.print("Prancha já existe");
@@ -40,17 +46,12 @@ public class PranchaRepository implements PranchaInterface {
     }
 
     public void atualizarPrancha(){
-        List<String> listaPrancha = new Prancha().converterPranchaParaString(_pranchaSelecionada);
+        List<String> listaPrancha = new Prancha().converterPranchaParaString(_prancha);
         _fileHelper.escreverConteudoArquivo(listaPrancha);
     }
 
     public void excluirPrancha(){
         _fileHelper.excluirArquivo();
-    }
-
-    public Prancha buscarConteudoAtualPrancha(){
-        List<String> listaString = _fileHelper.consultarConteudoAtualArquivo();
-        return new Prancha().converterStringParaPrancha(listaString);
     }
 
     //TODO: trazer além do nome o conteúdo inteiro do card nas propriedades do arquivo

@@ -1,59 +1,52 @@
 package UI;
 
+import UI.componentes.CaixaSelecao;
+import UI.componentes.CaixaTexto;
 import data.Prancha;
+import interfaces.CardPalavraInterface;
 import interfaces.PranchaInterface;
 import interfaces.PranchasInterface;
+import repositories.CardPalavraRepository;
 import repositories.PranchaRepository;
-import repositories.PranchasRepository;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class PranchaUI{
 
-    Scanner scan;
-
-    public PranchaUI(){
-        scan = new Scanner(System.in);
-    }
-
+    Scanner scan = new Scanner(System.in);;
+    Prancha _prancha;
     PranchaInterface _pranchaInterface;
-    Prancha _pranchaSelecionada;
+    CardsPalavraUI _telaCardPalavra;
 
-            PranchasInterface _pranchasInterface = new PranchasRepository();
-    void carregarTodasPranchas(){
-        List<Prancha> pranchas = _pranchasInterface.carregarTodasPranchas();
-        for(Prancha prancha : pranchas){
-            System.out.println("número da prancha:" + prancha.numeroPrancha); //TODO: UI - Texto
-            System.out.println("nome prancha: " + prancha.nomePrancha); //TODO: UI - Texto
-            System.out.println("data de criação prancha: " + prancha.dataHoraCriacao); //TODO: UI - Texto
-        }
-        System.out.println("Qual prancha deseja selecionar? [Número]"); //TODO: UI - Botão
-        int numeroPrancha = scan.nextInt();
-        selecionarPrancha(pranchas.get(numeroPrancha));
+    public PranchaUI(Prancha prancha){
+        _prancha = prancha;
+        _pranchaInterface = new PranchaRepository(_prancha);
+        _renderizarMenuPrancha();
     }
 
-    void visualizarHistoricoPrancha(){
-        _pranchaInterface = new PranchaRepository(_pranchaSelecionada);
-        _pranchaInterface.visualizarHistoricoPrancha();
+    void _renderizarMenuPrancha(){
+        System.out.println("O QUE DESEJA FAZER?"); //TODO: UI - TEXTO
+        System.out.println("1 - Visualizar informações da prancha"); //TODO: UI - TEXTO
+        System.out.println("2 - Atualizar Prancha"); //TODO: UI - BOTÃO
+        System.out.println("3 - Excluir Prancha"); //TODO: UI - BOTÃO
+        System.out.println("4 - Visualizar todos cards de palavra da prancha");
+        System.out.println("5 - Criar novo card da prancha");
+        //System.out.println("6 - Visualizar histórico da prancha"); //TODO: UI - BOTÃO
+        selecionarOpcao();
     }
 
-    void selecionarPrancha(Prancha pranchaSelecionada){
-        _pranchaInterface = new PranchaRepository(pranchaSelecionada);
-        _pranchaInterface.buscarConteudoAtualPrancha();
-        System.out.println(_pranchaSelecionada.nomeArquivo);
-    }
-
-    void criarPrancha(){
-        String nomePrancha = digitarNomePrancha(); //TODO: UI - TEXT BOX
-        Prancha prancha = new Prancha(nomePrancha);
-        _pranchaInterface = new PranchaRepository(prancha);
-        _pranchaInterface.criarPrancha(); //TODO: UI - BOTÃO
+    void visualizarPrancha(){
+        System.out.println("======================================================================");
+        System.out.println("número da prancha:" + _prancha.numeroPrancha); //TODO: UI - Texto
+        System.out.println("nome prancha: " + _prancha.nomePrancha); //TODO: UI - Texto
+        System.out.println("data de criação prancha: " + _prancha.dataHoraCriacao); //TODO: UI - Texto
+        System.out.println("======================================================================");
     }
 
     void atualizarPrancha(){
-        String nomePrancha = digitarNomePrancha(); //TODO: UI - TEXT BOX
-        if(nomePrancha==null) nomePrancha = _pranchaSelecionada.nomePrancha;
+        new CaixaTexto("Digite o número da prancha");
+        String nomePrancha = CaixaTexto.digitar(); //TODO: UI - TEXT BOX
+        if(nomePrancha==null) nomePrancha = _prancha.nomePrancha;
         Prancha novaPrancha = new Prancha(nomePrancha);
         _pranchaInterface = new PranchaRepository(novaPrancha);
 
@@ -61,13 +54,24 @@ public class PranchaUI{
     }
 
     void excluirPrancha(){
-        _pranchaInterface = new PranchaRepository(_pranchaSelecionada);
         _pranchaInterface.excluirPrancha(); //TODO: UI - BOTÃO
     }
 
-    static String digitarNomePrancha(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Digite o nome da prancha: ");
-        return scan.nextLine();
+    void visualizarHistoricoPrancha(){
+        _pranchaInterface.visualizarHistoricoPrancha();
+    }
+
+    private void selecionarOpcao(){
+        new CaixaSelecao();
+        int opcao = CaixaSelecao.selecionar();
+        _telaCardPalavra = new CardsPalavraUI(_prancha);
+        switch(opcao){
+            case 1: visualizarPrancha();
+            case 2: atualizarPrancha();
+            case 3: excluirPrancha();
+            case 4: _telaCardPalavra.consultarTodosCardsPalavras();
+            case 5: _telaCardPalavra.criarCard();
+            //case 6: telaPrancha.visualizarHistoricoPrancha();
+        }
     }
 }

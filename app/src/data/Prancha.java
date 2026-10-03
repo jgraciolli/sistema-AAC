@@ -27,7 +27,6 @@ public class Prancha{
     public Prancha(String nomeArquivo, int numeroPrancha){
         this.numeroPrancha = numeroPrancha;
         this.nomeArquivo = nomeArquivo;
-        this.dataHoraCriacao = new DateTimeHelper().buscarDataHoraAtual();
     }
 
     public Prancha(){}

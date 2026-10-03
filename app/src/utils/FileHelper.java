@@ -1,12 +1,8 @@
 package utils;
 
-import data.Prancha;
-
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FileHelper{
 
@@ -18,9 +14,6 @@ public class FileHelper{
         _nomeArquivo = "database\\\\" + _caminho + "\\\\" + nomeArquivo;
     }
 
-    public FileHelper(String caminho){
-        _caminho = "database\\\\" + caminho;
-    }
 
     public void criarArquivo() {
         try {
@@ -115,10 +108,5 @@ public class FileHelper{
         }
         criarArquivo();
         return new File(_nomeArquivo);
-    }
-
-    public File[] consultarVariosArquivos() {
-        File file = new File(_caminho);
-        return file.listFiles();
     }
 }

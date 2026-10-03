@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         //TODO: criar objeto frase -> esse objeto será o responsável por receber as palavras
 
-        new InicioUI().renderizarTelaInicial();
+        new InicioUI();
 
         System.exit(0);
     }
