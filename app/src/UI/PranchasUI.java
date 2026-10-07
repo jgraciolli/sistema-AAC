@@ -3,8 +3,8 @@ package UI;
 import UI.componentes.CaixaSelecao;
 import UI.componentes.CaixaTexto;
 import data.Prancha;
-import interfaces.PranchaInterface;
-import interfaces.PranchasInterface;
+import interfaces.IPrancha;
+import interfaces.IPranchas;
 import repositories.PranchaRepository;
 import repositories.PranchasRepository;
 
@@ -14,13 +14,13 @@ import java.util.Scanner;
 public class PranchasUI {
 
     Scanner scan;
-    PranchasInterface _pranchasInterface;
+    IPranchas _I_pranchas;
     List<Prancha> _pranchas;
-    PranchaInterface _pranchaInterface;
+    IPrancha _I_prancha;
     PranchaUI _pranchaUI;
 
     public PranchasUI(){
-        _pranchasInterface = new PranchasRepository();
+        _I_pranchas = new PranchasRepository();
         scan = new Scanner(System.in);
         carregarTodasPranchas();
         renderizarTelaInicial();
@@ -35,7 +35,7 @@ public class PranchasUI {
     }
 
     void carregarTodasPranchas(){
-        _pranchas = _pranchasInterface.carregarTodasPranchas();
+        _pranchas = _I_pranchas.carregarTodasPranchas();
         if(_pranchas.isEmpty()){
             System.out.println("Nenhuma prancha inserida"); //TODO: UI - DIALOG BOX
             return;
@@ -64,8 +64,8 @@ public class PranchasUI {
         new CaixaTexto("Digite o nome da prancha");
         String nomePrancha = CaixaTexto.digitar();
         Prancha prancha = new Prancha(nomePrancha);
-        _pranchaInterface = new PranchaRepository(prancha);
-        _pranchaInterface.criarPrancha(); //TODO: UI - BOTÃO
+        _I_prancha = new PranchaRepository(prancha);
+        _I_prancha.criarPrancha(); //TODO: UI - BOTÃO
     }
 
     //NOTE: função temporária

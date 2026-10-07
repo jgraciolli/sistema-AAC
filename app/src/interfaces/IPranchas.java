@@ -4,7 +4,7 @@ import data.Prancha;
 
 import java.util.List;
 
-public interface PranchasInterface {
+public interface IPranchas {
     List<Prancha> carregarTodasPranchas();
     Prancha consultarPranchaComBaseNoNumero(int numero);
 }

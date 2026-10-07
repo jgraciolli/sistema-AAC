@@ -3,10 +3,7 @@ package UI;
 import UI.componentes.CaixaSelecao;
 import UI.componentes.CaixaTexto;
 import data.Prancha;
-import interfaces.CardPalavraInterface;
-import interfaces.PranchaInterface;
-import interfaces.PranchasInterface;
-import repositories.CardPalavraRepository;
+import interfaces.IPrancha;
 import repositories.PranchaRepository;
 
 import java.util.Scanner;
@@ -15,12 +12,12 @@ public class PranchaUI{
 
     Scanner scan = new Scanner(System.in);;
     Prancha _prancha;
-    PranchaInterface _pranchaInterface;
+    IPrancha _I_prancha;
     CardsPalavraUI _telaCardPalavra;
 
     public PranchaUI(Prancha prancha){
         _prancha = prancha;
-        _pranchaInterface = new PranchaRepository(_prancha);
+        _I_prancha = new PranchaRepository(_prancha);
         _renderizarMenuPrancha();
     }
 
@@ -44,21 +41,23 @@ public class PranchaUI{
     }
 
     void atualizarPrancha(){
-        new CaixaTexto("Digite o número da prancha");
+        //TODO: informar quais campos podem ser editados
+        //TODO: percorrer entidade em busca do nome das propriedades
+        new CaixaTexto("Digite o novo nome da prancha");
         String nomePrancha = CaixaTexto.digitar(); //TODO: UI - TEXT BOX
         if(nomePrancha==null) nomePrancha = _prancha.nomePrancha;
         Prancha novaPrancha = new Prancha(nomePrancha);
-        _pranchaInterface = new PranchaRepository(novaPrancha);
+        _I_prancha = new PranchaRepository(novaPrancha);
 
-        _pranchaInterface.atualizarPrancha(); //TODO: UI - BOTÃO
+        _I_prancha.atualizarPrancha(); //TODO: UI - BOTÃO
     }
 
     void excluirPrancha(){
-        _pranchaInterface.excluirPrancha(); //TODO: UI - BOTÃO
+        _I_prancha.excluirPrancha(); //TODO: UI - BOTÃO
     }
 
     void visualizarHistoricoPrancha(){
-        _pranchaInterface.visualizarHistoricoPrancha();
+        _I_prancha.visualizarHistoricoPrancha();
     }
 
     private void selecionarOpcao(){

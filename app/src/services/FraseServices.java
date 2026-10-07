@@ -1,7 +1,16 @@
 package services;
 
+import data.Prancha;
+import repositories.CardsPalavraRepository;
+
 public class FraseServices {
     //OBS: Construir frase -> Adicionar palavra do card a frase
+
+    CardsPalavraRepository _cardsPalavras;
+
+    public FraseServices(){
+            _cardsPalavras = new CardsPalavraRepository();
+    }
 
     public void adicionarPalavraDoCardAFrase(){
         //UI: esse método deve ser chamado ao clicar em qualquer lugar no card de palavra

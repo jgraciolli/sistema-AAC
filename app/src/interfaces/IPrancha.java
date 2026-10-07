@@ -4,7 +4,7 @@ import data.Prancha;
 
 import java.util.List;
 
-public interface PranchaInterface {
+public interface IPrancha {
     List<Prancha> visualizarHistoricoPrancha();
     void criarPrancha();
     void atualizarPrancha();

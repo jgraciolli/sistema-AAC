@@ -3,6 +3,9 @@ package utils;
 import java.io.File;
 import java.util.EmptyStackException;
 
+//NOTE: esse helper é descartável quando inserido o banco de dados
+// passaremos provavelmente a utilizar QUERY ao invés de ‘loops’
+
 public class FilesHelper {
 
     String _caminho;

@@ -4,17 +4,17 @@ import UI.componentes.CaixaSelecao;
 import UI.componentes.CaixaTexto;
 import data.CardPalavra;
 import data.Prancha;
-import interfaces.CardPalavraInterface;
-import interfaces.CardsPalavraInterface;
+import interfaces.ICardPalavra;
+import interfaces.ICardsPalavra;
 import repositories.CardPalavraRepository;
 import repositories.CardsPalavraRepository;
 
 import java.util.List;
 
 public class CardsPalavraUI {
-    CardsPalavraInterface _cardsPalavrasInterface;
+    ICardsPalavra _cardsPalavrasInterface;
     Prancha _prancha;
-    CardPalavraInterface _cardPalavrasInterface;
+    ICardPalavra _cardPalavrasInterface;
     List<CardPalavra> _listaCardPalavra;
 
     CardsPalavraUI(Prancha prancha){

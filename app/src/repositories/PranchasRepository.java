@@ -1,14 +1,14 @@
 package repositories;
 
 import data.Prancha;
-import interfaces.PranchasInterface;
+import interfaces.IPranchas;
 import utils.FileHelper;
 import utils.FilesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PranchasRepository implements PranchasInterface {
+public class PranchasRepository implements IPranchas {
 
     List<Prancha> _pranchas;
     String _caminho = "pranchas";
@@ -37,7 +37,7 @@ public class PranchasRepository implements PranchasInterface {
         var files = _filesHelper.consultarVariosArquivos();
         for (var file : files){
             _fileHelper = new FileHelper(_caminho, file.getName());
-            List<String> listaString = _fileHelper.consultarConteudoAtualArquivo();
+            List<String> listaString = _fileHelper.consultar();
             Prancha prancha = new Prancha().converterStringParaPrancha(listaString);;
             prancha.nomeArquivo = file.getName();
             prancha.numeroPrancha = consultarNumeroPrancha(file.getName());

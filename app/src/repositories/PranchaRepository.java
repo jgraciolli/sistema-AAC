@@ -1,13 +1,13 @@
 package repositories;
 
 import data.Prancha;
-import interfaces.PranchaInterface;
+import interfaces.IPrancha;
 import utils.FileHelper;
 import utils.FilesHelper;
 
 import java.util.*;
 
-public class PranchaRepository implements PranchaInterface {
+public class PranchaRepository implements IPrancha {
 
     FileHelper _fileHelper;
     FilesHelper _filesHelper;
@@ -23,20 +23,20 @@ public class PranchaRepository implements PranchaInterface {
     }
 
     public void criarPrancha(){
-        if (!_fileHelper.arquivoExiste()) {
-            _fileHelper.criarArquivo();
+        if (_fileHelper.existe()) {
+            _fileHelper.criar();
             _filesHelper = new FilesHelper("cardsPalavras\\\\"  + _prancha.nomeArquivo);
             _filesHelper.criarPasta();
             //RN: apenas a primeira escrita
             List<String> listaPrancha = new Prancha().converterPranchaParaString(_prancha);
-            _fileHelper.escreverConteudoArquivo(listaPrancha);
+            _fileHelper.escrever(listaPrancha);
         }else{
             System.out.print("Prancha já existe");
         }
     }
 
     public List<Prancha> visualizarHistoricoPrancha(){
-        List<List<String>> listaLinhas = _fileHelper.consultarConteudoArquivo();
+        List<List<String>> listaLinhas = _fileHelper.consultarHistorico();
         List<Prancha> listaPranchas = new ArrayList<>();
         for(var i : listaLinhas){
             Prancha prancaFormatada = new Prancha().converterStringParaPrancha(i);
@@ -47,15 +47,10 @@ public class PranchaRepository implements PranchaInterface {
 
     public void atualizarPrancha(){
         List<String> listaPrancha = new Prancha().converterPranchaParaString(_prancha);
-        _fileHelper.escreverConteudoArquivo(listaPrancha);
+        _fileHelper.escrever(listaPrancha);
     }
 
     public void excluirPrancha(){
-        _fileHelper.excluirArquivo();
-    }
-
-    //TODO: trazer além do nome o conteúdo inteiro do card nas propriedades do arquivo
-    String consultarNomePrancha(){
-        return _fileHelper.consultarPropriedadesDoArquivo().getName();
+        _fileHelper.excluir();
     }
 }
