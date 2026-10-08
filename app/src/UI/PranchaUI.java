@@ -26,8 +26,7 @@ public class PranchaUI{
         System.out.println("1 - Visualizar informações da prancha"); //TODO: UI - TEXTO
         System.out.println("2 - Atualizar Prancha"); //TODO: UI - BOTÃO
         System.out.println("3 - Excluir Prancha"); //TODO: UI - BOTÃO
-        System.out.println("4 - Visualizar todos cards de palavra da prancha");
-        System.out.println("5 - Criar novo card da prancha");
+        System.out.println("4 - Visualizar Cards da Prancha");
         //System.out.println("6 - Visualizar histórico da prancha"); //TODO: UI - BOTÃO
         selecionarOpcao();
     }
@@ -63,13 +62,12 @@ public class PranchaUI{
     private void selecionarOpcao(){
         new CaixaSelecao();
         int opcao = CaixaSelecao.selecionar();
-        _telaCardPalavra = new CardsPalavraUI(_prancha);
+
         switch(opcao){
-            case 1: visualizarPrancha();
-            case 2: atualizarPrancha();
-            case 3: excluirPrancha();
-            case 4: _telaCardPalavra.consultarTodosCardsPalavras();
-            case 5: _telaCardPalavra.criarCard();
+            case 1: visualizarPrancha();break;
+            case 2: atualizarPrancha();break;
+            case 3: excluirPrancha();break;
+            case 4: _telaCardPalavra = new CardsPalavraUI(_prancha);break;
             //case 6: telaPrancha.visualizarHistoricoPrancha();
         }
     }

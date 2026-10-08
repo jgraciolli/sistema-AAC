@@ -15,11 +15,12 @@ public class CardsPalavraRepository implements ICardsPalavra {
     FilesHelper _filesHelper;
     IDB db;
     String _caminho = "cardsPalavras";
-    public List<CardPalavra> cardPalavras;
+    public List<CardPalavra> _cardPalavras;
 
     public CardsPalavraRepository(Prancha prancha){
-        _filesHelper = new FilesHelper(_caminho + "\\\\" + prancha.nomeArquivo);
-        cardPalavras = buscarCardsDePalavrasLocais();
+        _caminho = _caminho + "\\\\" + prancha.nomeArquivo;
+        _filesHelper = new FilesHelper(_caminho);
+        _cardPalavras = buscarCardsDePalavrasLocais();
     }
 
     public CardsPalavraRepository(){
@@ -28,7 +29,7 @@ public class CardsPalavraRepository implements ICardsPalavra {
 
     @Override
     public List<CardPalavra> carregarTodosCardsDePalavras() {
-        return cardPalavras;
+        return _cardPalavras;
     }
 
     public List<CardPalavra> selecionarCardsDePalavrasEspecificos(){

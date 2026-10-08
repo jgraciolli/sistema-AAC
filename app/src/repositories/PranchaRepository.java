@@ -12,12 +12,12 @@ public class PranchaRepository implements IPrancha {
     FileHelper _fileHelper;
     FilesHelper _filesHelper;
     String _caminho = "pranchas";
-    String _pastaPrancha;
     Prancha _prancha;
 
     public PranchaRepository(Prancha prancha){
         _filesHelper = new FilesHelper(_caminho);
-        _prancha = new Prancha(_filesHelper.definirNumeroObjetoAutomaticamente(), prancha.nomePrancha);
+        int numero = _filesHelper.definirNumeroObjetoAutomaticamente();
+        _prancha = new Prancha(numero, prancha.nomePrancha);
         _fileHelper = new FileHelper(_caminho, _prancha.nomeArquivo);
 
     }

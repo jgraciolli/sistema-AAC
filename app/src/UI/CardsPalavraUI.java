@@ -16,14 +16,17 @@ public class CardsPalavraUI {
     Prancha _prancha;
     ICardPalavra _cardPalavrasInterface;
     List<CardPalavra> _listaCardPalavra;
+    CardPalavraUI _telaCardPalavra;
+    CardPalavra _cardPalavra;
 
     CardsPalavraUI(Prancha prancha){
         _prancha = prancha;
-        _cardsPalavrasInterface = new CardsPalavraRepository(_prancha);
+        consultarTodosCardsPalavras();
+        _renderizarTelaCard();
     }
 
 
-    public void renderizarTelaCard(){
+    public void _renderizarTelaCard(){
         System.out.println("MENU DE CARDS");
         System.out.println("1 - Selecionar card de palavra");
         System.out.println("2 - Criar novo card de palavra");
@@ -31,25 +34,29 @@ public class CardsPalavraUI {
     }
 
     public void consultarTodosCardsPalavras(){
-
         try {
+            _cardsPalavrasInterface = new CardsPalavraRepository(_prancha);
             _listaCardPalavra = _cardsPalavrasInterface.carregarTodosCardsDePalavras();
             for(var cardPalavra : _listaCardPalavra){
+                System.out.println("======================================================================");
                 System.out.println("Categoria do card: " + cardPalavra.numeroCard); //TODO: UI - TEXTO
                 System.out.println("Palavra do card: " + cardPalavra.palavraCard); //TODO: UI - TEXTO
                 System.out.println("Caminho da imagem: " + cardPalavra.imagem); //TODO: UI - TEXTO
                 System.out.println("Cor do card: " + cardPalavra.corCard); //TODO: UI - TEXTO
                 System.out.println("Ordem do card na prancha: " + cardPalavra.ordem); //TODO: UI - TEXTO
+                System.out.println("======================================================================");
             }
-            _selecionarCard();
         } catch (Exception e) {
             System.out.println("Erro ao consultar cards de palavra");
         }
     }
 
     public void _selecionarCard(){
-        int numero = new CaixaSelecao().selecionar();
-        _cardPalavrasInterface = new CardPalavraRepository(_listaCardPalavra.get(numero), _prancha);
+        new CaixaSelecao("Qual card deseja selecionar:");
+        int numero = CaixaSelecao.selecionar();
+        _cardPalavra = _listaCardPalavra.get(numero);
+        _cardPalavrasInterface = new CardPalavraRepository(_cardPalavra, _prancha);
+        _telaCardPalavra = new CardPalavraUI(_cardPalavra, _prancha);
     }
 
     public void criarCard(){
@@ -69,11 +76,11 @@ public class CardsPalavraUI {
 
 
     private void selecionarOpcao(){
-        new CaixaSelecao();
+        new CaixaSelecao("Seleciona uma opção:");
         int opcao = CaixaSelecao.selecionar();
         switch(opcao){
-            case 1: selecionarOpcao();
-            case 2: criarCard();
+            case 1: _selecionarCard();break;
+            case 2: criarCard();break;
         }
     }
 }

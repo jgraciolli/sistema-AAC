@@ -28,11 +28,12 @@ public class FilesHelper {
 
     //TODO: corrigir valor
     public int definirNumeroObjetoAutomaticamente(){
-        int numero;
-        File[] arquivos = consultarVariosArquivos();
-        if(arquivos != null && arquivos.length > 0){
-            numero = consultarVariosArquivos().length;
+
+        int numero = consultarVariosArquivos().length;
+        if(numero > 1) {
             return numero + 1;
+        }else if(numero == 1){
+            return numero;
         }else{
             return 0;
         }

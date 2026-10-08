@@ -61,8 +61,8 @@ public class Prancha{
     public Prancha mapearCamposEntidadePrancha(Prancha prancha, String chave, String valor){
         //NOTE: conforme vir mais campos utilizar o switch para recuperá-los
         switch (chave){
-            case "nome": prancha.nomePrancha = valor;
-            case "data": prancha.dataHoraCriacao = valor;
+            case "nome": prancha.nomePrancha = valor; break;
+            case "data": prancha.dataHoraCriacao = valor;break;
         }
         return prancha;
     }

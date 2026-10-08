@@ -72,12 +72,12 @@ public class CardPalavra{
 
     CardPalavra mapearCamposEntidadeCardPalavra(CardPalavra cardPalavra, String key, String value){
         switch(key){
-            case "categoriaCard": cardPalavra.categoriaCard = value;
-            case "palavraCard": cardPalavra.palavraCard = value;
-            case "imagem": cardPalavra.imagem = value;
-            case "corCard": cardPalavra.corCard = value;
-            case "ordem": cardPalavra.ordem = Integer.parseInt(value);
-            case "numeroDaPrancha": cardPalavra.numeroDaPrancha = Integer.parseInt(value);
+            case "categoriaCard": cardPalavra.categoriaCard = value; break;
+            case "palavraCard": cardPalavra.palavraCard = value; break;
+            case "imagem": cardPalavra.imagem = value; break;
+            case "corCard": cardPalavra.corCard = value;break;
+            case "ordem": cardPalavra.ordem = Integer.parseInt(value);break;
+            case "numeroDaPrancha": cardPalavra.numeroDaPrancha = Integer.parseInt(value);break;
         }
         return cardPalavra;
     }

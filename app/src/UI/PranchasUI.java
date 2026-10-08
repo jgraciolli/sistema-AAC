@@ -73,8 +73,8 @@ public class PranchasUI {
         new CaixaSelecao();
         int opcao = CaixaSelecao.selecionar();
         switch (opcao){
-            case 1: _selecionarPrancha();
-            case 2: _criarPrancha();
+            case 1: _selecionarPrancha(); break;
+            case 2: _criarPrancha(); break;
         }
     }
 

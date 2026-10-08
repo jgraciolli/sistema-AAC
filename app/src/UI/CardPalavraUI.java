@@ -1,36 +1,62 @@
 package UI;
 
+import data.CardPalavra;
 import data.Prancha;
 import interfaces.ICardPalavra;
+import repositories.CardPalavraRepository;
+import services.FraseServices;
 
 import java.util.Scanner;
 
 public class CardPalavraUI {
-    ICardPalavra iCardPalavra;
-
     Scanner scan = new Scanner(System.in);
+    CardPalavra _cardPalavra;
+    ICardPalavra _cardPalavraInterface;
     Prancha _prancha;
+    FraseServices _fraseServices;
+
+    public CardPalavraUI(CardPalavra cardPalavra, Prancha prancha){
+        _cardPalavra = cardPalavra;
+        _prancha = prancha;
+        _cardPalavraInterface = new CardPalavraRepository(_cardPalavra, _prancha);
+        renderizarMenuCardPalavra();
+    }
 
     private void renderizarMenuCardPalavra(){
-        System.out.println("Visualizar informações do card de palavras");
-        System.out.println("Atualizar card de palavra");
-        System.out.println("Excluir card de palavras");
-        System.out.println("Atribuir card de palavras à frase");
+        System.out.println("======================================================================");
+        System.out.println("1 - Visualizar informações do card de palavras");
+        System.out.println("2 - Atualizar card de palavra");
+        System.out.println("3 - Excluir card de palavras");
+        System.out.println("4 - adicionar a palavra do card à frase");
+        System.out.println("======================================================================");
+        selecionarOpcao();
     }
 
-    public CardPalavraUI(Prancha prancha){
-        _prancha = prancha;
+    private void visualizarCard(){
+        _cardPalavraInterface.visualizarCard();
     }
 
-    public void atualizarCard(){
-
+    private void atualizarCard(){
+        _cardPalavraInterface.atualizarCard();
     }
 
-    public void excluirCard(){
-
+    private void excluirCard(){
+        _cardPalavraInterface.excluirCard();
     }
 
-    public void visualizarHistoricoCard(){
+    private void visualizarHistoricoCard(){
+        _cardPalavraInterface.visualizarHistoricoCard();
+    }
 
+    void selecionarOpcao(){
+        _fraseServices = new FraseServices();
+        int opcao = scan.nextInt();
+        switch(opcao){
+            case 1:visualizarCard();break;
+            case 2:atualizarCard();break;
+            case 3:excluirCard();break;
+            case 4:_fraseServices.adicionarPalavraDoCardAFrase(_cardPalavra.palavraCard);break;
+            //case 5: visualizarHistoricoCard();
+        }
     }
 }

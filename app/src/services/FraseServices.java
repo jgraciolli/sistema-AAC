@@ -12,7 +12,7 @@ public class FraseServices {
             _cardsPalavras = new CardsPalavraRepository();
     }
 
-    public void adicionarPalavraDoCardAFrase(){
+    public void adicionarPalavraDoCardAFrase(String palavra){
         //UI: esse método deve ser chamado ao clicar em qualquer lugar no card de palavra
         //TODO: receber palavra do card selecionado
         //TODO: retornar palavra

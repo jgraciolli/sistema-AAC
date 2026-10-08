@@ -31,8 +31,9 @@ RF11 - Reproduzir palavra
 RF12 - Reordenar cards da prancha
 RF13 - Gerar imagem com base na palavra (IA)
 RF14 - Atribuir imagem ao card
-RF15 - Construir frase com palavras
-RF16 - Reproduzir frase
+RF15 - Atribuir card de palavras a frase
+RF16 - Construir frase com palavras
+RF17 - Reproduzir frase
 
 ## Requisitos não funcionais
 
