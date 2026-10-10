@@ -16,9 +16,9 @@ public class Prancha{
         this.dataHoraCriacao = new DateTimeHelper().buscarDataHoraAtual();
     }
 
-    public Prancha(int numeroPrancha, String nomePrancha){
+    public Prancha(int numeroPrancha, String nomePrancha, String nomeArquivo){
         this.numeroPrancha = numeroPrancha;
-        this.nomeArquivo = "Prancha_"+numeroPrancha;
+        this.nomeArquivo = nomeArquivo;
         this.nomePrancha = nomePrancha;
         this.dataHoraCriacao = new DateTimeHelper().buscarDataHoraAtual();
     }
@@ -41,6 +41,7 @@ public class Prancha{
     public List<String> converterPranchaParaString(Prancha prancha){
         //NOTE: conforme vir mais campos utilizar o add para adicioná-los
         List<String> listaPrancha = new ArrayList<>();
+        listaPrancha.add("numero:" + prancha.numeroPrancha);
         listaPrancha.add("nome:" + prancha.nomePrancha);
         listaPrancha.add("data:" + prancha.dataHoraCriacao);
         return listaPrancha;

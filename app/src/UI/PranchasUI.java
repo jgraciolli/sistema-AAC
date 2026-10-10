@@ -56,7 +56,10 @@ public class PranchasUI {
     void _selecionarPrancha(){
         new CaixaSelecao("Qual a prancha que deseja selecionar?");
         int numero = CaixaSelecao.selecionar();
-        var prancha = _pranchas.get(numero);
+        if(_pranchas.isEmpty()) {
+            System.out.println("Sem pranchas para selecionar!"); return;
+        }
+        var prancha = _pranchas.get(numero -1);
         _pranchaUI = new PranchaUI(prancha);
     }
 

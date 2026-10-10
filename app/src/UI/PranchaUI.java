@@ -12,12 +12,12 @@ public class PranchaUI{
 
     Scanner scan = new Scanner(System.in);;
     Prancha _prancha;
-    IPrancha _I_prancha;
+    IPrancha _pranchaInterface;
     CardsPalavraUI _telaCardPalavra;
 
     public PranchaUI(Prancha prancha){
         _prancha = prancha;
-        _I_prancha = new PranchaRepository(_prancha);
+        _pranchaInterface = new PranchaRepository(_prancha);
         _renderizarMenuPrancha();
     }
 
@@ -40,23 +40,24 @@ public class PranchaUI{
     }
 
     void atualizarPrancha(){
+        visualizarPrancha();
         //TODO: informar quais campos podem ser editados
         //TODO: percorrer entidade em busca do nome das propriedades
         new CaixaTexto("Digite o novo nome da prancha");
         String nomePrancha = CaixaTexto.digitar(); //TODO: UI - TEXT BOX
         if(nomePrancha==null) nomePrancha = _prancha.nomePrancha;
-        Prancha novaPrancha = new Prancha(nomePrancha);
-        _I_prancha = new PranchaRepository(novaPrancha);
+        Prancha novaPrancha = new Prancha(_prancha.numeroPrancha, nomePrancha, "Prancha_"+_prancha.numeroPrancha);
+        _pranchaInterface = new PranchaRepository(novaPrancha);
 
-        _I_prancha.atualizarPrancha(); //TODO: UI - BOTÃO
+        _pranchaInterface.atualizarPrancha(); //TODO: UI - BOTÃO
     }
 
     void excluirPrancha(){
-        _I_prancha.excluirPrancha(); //TODO: UI - BOTÃO
+        _pranchaInterface.excluirPrancha(); //TODO: UI - BOTÃO
     }
 
     void visualizarHistoricoPrancha(){
-        _I_prancha.visualizarHistoricoPrancha();
+        _pranchaInterface.visualizarHistoricoPrancha();
     }
 
     private void selecionarOpcao(){

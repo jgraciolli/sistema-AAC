@@ -1,9 +1,11 @@
 package UI;
 
+import UI.componentes.CaixaTexto;
 import data.CardPalavra;
 import data.Prancha;
 import interfaces.ICardPalavra;
 import repositories.CardPalavraRepository;
+import repositories.CardsPalavraRepository;
 import services.FraseServices;
 
 import java.util.Scanner;
@@ -33,11 +35,27 @@ public class CardPalavraUI {
     }
 
     private void visualizarCard(){
-        _cardPalavraInterface.visualizarCard();
+        System.out.println("======================================================================");
+        System.out.println("Número do card na prancha: " + _cardPalavra.numeroCard);
+        System.out.println("Categoria do card: " + _cardPalavra.categoriaCard); //TODO: UI - TEXTO
+        System.out.println("Palavra do card: " + _cardPalavra.palavraCard); //TODO: UI - TEXTO
+        System.out.println("Caminho da imagem: " + _cardPalavra.imagem); //TODO: UI - TEXTO
+        System.out.println("Cor do card: " + _cardPalavra.corCard); //TODO: UI - TEXTO
+        System.out.println("Ordem do card na prancha: " + _cardPalavra.ordem); //TODO: UI - TEXTO
+        System.out.println("======================================================================");
     }
 
     private void atualizarCard(){
+        visualizarCard();
+        new CaixaTexto("Digite a nova categoria do card de palavra");
+        String categoriaCard = CaixaTexto.digitar();
+        if(categoriaCard!=null) _cardPalavra.categoriaCard = categoriaCard;
+        new CaixaTexto("Digite o novo nome do card de palavra");
+        String nomeCard = CaixaTexto.digitar();
+        if(nomeCard != null) _cardPalavra.palavraCard = nomeCard;
+        _cardPalavraInterface = new CardPalavraRepository(_cardPalavra, _prancha);
         _cardPalavraInterface.atualizarCard();
+        visualizarCard();
     }
 
     private void excluirCard(){

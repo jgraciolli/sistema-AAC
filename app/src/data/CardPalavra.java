@@ -50,6 +50,7 @@ public class CardPalavra{
 
     public List<String> converterCardPalavraParaString(CardPalavra cardPalavra){
         List<String> listaCardPalavra = new ArrayList<>();
+        listaCardPalavra.add("numeroCard:" + cardPalavra.numeroCard);
         listaCardPalavra.add("categoriaCard:" + cardPalavra.categoriaCard);
         listaCardPalavra.add("palavraCard:" + cardPalavra.palavraCard);
         listaCardPalavra.add("imagem:" + cardPalavra.imagem);
@@ -72,6 +73,7 @@ public class CardPalavra{
 
     CardPalavra mapearCamposEntidadeCardPalavra(CardPalavra cardPalavra, String key, String value){
         switch(key){
+            case "numeroCard": cardPalavra.numeroCard = Integer.parseInt(value); break;
             case "categoriaCard": cardPalavra.categoriaCard = value; break;
             case "palavraCard": cardPalavra.palavraCard = value; break;
             case "imagem": cardPalavra.imagem = value; break;

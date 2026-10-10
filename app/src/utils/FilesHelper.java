@@ -1,7 +1,9 @@
 package utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.List;
 
 //NOTE: esse helper é descartável quando inserido o banco de dados
 // passaremos provavelmente a utilizar QUERY ao invés de ‘loops’
@@ -28,15 +30,42 @@ public class FilesHelper {
 
     //TODO: corrigir valor
     public int definirNumeroObjetoAutomaticamente(){
-
-        int numero = consultarVariosArquivos().length;
-        if(numero > 1) {
-            return numero + 1;
-        }else if(numero == 1){
-            return numero;
-        }else{
-            return 0;
+        File[] files = consultarVariosArquivos();
+        List<Integer> numeros = new ArrayList<>();
+        String nome;
+        for(File i : files){
+            nome = i.getName();
+            String[] aux = nome.split("_", 2);
+            numeros.add(Integer.parseInt(aux[1]));
         }
+        return processarNumeroFaltante(numeros);
+
+    }
+
+    private int processarNumeroFaltante(List<Integer> numeros){
+
+        /*
+        * 0
+        * 1
+        * 2
+        * 3
+        * RN: se o próximo número for diferente de n+1 retorne n+1*/
+
+        int numAux = 0;
+
+        for(int numero : numeros){
+            if(numAux!=0){
+                if(numAux + 1 != numero){
+                    return numAux + 1;
+                }
+            }
+            ///RN: na primeira vez não vai acontecer nada porque só tem um valor
+            numAux = numero;
+            if(numeros.getLast() == numero){
+                return numero + 1;
+            }
+        }
+        return 1;
     }
 
     //NOTE: essa função deixou de ser usada depois que a pasta passou a ser criada automaticamente
@@ -48,7 +77,7 @@ public class FilesHelper {
                 System.out.println("O caminho especificado não é o de um diretório");
             }
         }else{
-            criarPasta();
+                criarPasta();
         }
     }
 
@@ -59,6 +88,14 @@ public class FilesHelper {
         try {
             arquivo.mkdirs();
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void excluirPasta(){
+        File arquivo = new File(_caminho);
+        try {
+            arquivo.delete();
+        }catch (Exception e){
             throw new RuntimeException(e);
         }
     }

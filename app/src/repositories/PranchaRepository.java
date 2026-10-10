@@ -15,14 +15,17 @@ public class PranchaRepository implements IPrancha {
     Prancha _prancha;
 
     public PranchaRepository(Prancha prancha){
-        _filesHelper = new FilesHelper(_caminho);
-        int numero = _filesHelper.definirNumeroObjetoAutomaticamente();
-        _prancha = new Prancha(numero, prancha.nomePrancha);
-        _fileHelper = new FileHelper(_caminho, _prancha.nomeArquivo);
-
+        String nomePrancha = "Prancha_" + prancha.numeroPrancha;
+        _prancha = new Prancha(prancha.numeroPrancha, prancha.nomePrancha, nomePrancha);
+        _fileHelper = new FileHelper(_caminho, nomePrancha);
+        _filesHelper = new FilesHelper("cardsPalavras\\\\" + nomePrancha);
     }
 
     public void criarPrancha(){
+        _filesHelper = new FilesHelper(_caminho);
+        int numero = _filesHelper.definirNumeroObjetoAutomaticamente();
+        _prancha = new Prancha(numero, _prancha.nomePrancha, "Prancha_" + numero);
+        _fileHelper = new FileHelper(_caminho, _prancha.nomeArquivo);
         if (_fileHelper.existe()) {
             _fileHelper.criar();
             _filesHelper = new FilesHelper("cardsPalavras\\\\"  + _prancha.nomeArquivo);
@@ -52,5 +55,6 @@ public class PranchaRepository implements IPrancha {
 
     public void excluirPrancha(){
         _fileHelper.excluir();
+        _filesHelper.excluirPasta();
     }
 }

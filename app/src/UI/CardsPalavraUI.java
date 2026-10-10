@@ -37,9 +37,14 @@ public class CardsPalavraUI {
         try {
             _cardsPalavrasInterface = new CardsPalavraRepository(_prancha);
             _listaCardPalavra = _cardsPalavrasInterface.carregarTodosCardsDePalavras();
+            if(_listaCardPalavra.isEmpty()){
+                System.out.println("Nenhuma card de palavra nessa prancha"); //TODO: UI - DIALOG BOX
+                return;
+            };
             for(var cardPalavra : _listaCardPalavra){
                 System.out.println("======================================================================");
-                System.out.println("Categoria do card: " + cardPalavra.numeroCard); //TODO: UI - TEXTO
+                System.out.println("Número card de palavra: " + cardPalavra.numeroCard);
+                System.out.println("Categoria do card: " + cardPalavra.categoriaCard); //TODO: UI - TEXTO
                 System.out.println("Palavra do card: " + cardPalavra.palavraCard); //TODO: UI - TEXTO
                 System.out.println("Caminho da imagem: " + cardPalavra.imagem); //TODO: UI - TEXTO
                 System.out.println("Cor do card: " + cardPalavra.corCard); //TODO: UI - TEXTO
@@ -54,15 +59,15 @@ public class CardsPalavraUI {
     public void _selecionarCard(){
         new CaixaSelecao("Qual card deseja selecionar:");
         int numero = CaixaSelecao.selecionar();
-        _cardPalavra = _listaCardPalavra.get(numero);
+        _cardPalavra = _listaCardPalavra.get(numero-1);
         _cardPalavrasInterface = new CardPalavraRepository(_cardPalavra, _prancha);
         _telaCardPalavra = new CardPalavraUI(_cardPalavra, _prancha);
     }
 
     public void criarCard(){
-        new CaixaTexto("Digite o nome do card de palavra");
-        String categoriaCard = CaixaTexto.digitar();
         new CaixaTexto("Digite a categoria do card de palavra");
+        String categoriaCard = CaixaTexto.digitar();
+        new CaixaTexto("Digite o nome do card de palavra");
         String nomeCard = CaixaTexto.digitar();
         var cardPalavra = new CardPalavra(
                 categoriaCard,

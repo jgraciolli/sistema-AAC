@@ -5,6 +5,7 @@ import data.CardPalavra;
 import data.Prancha;
 import interfaces.ICardPalavra;
 import utils.FileHelper;
+import utils.FilesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,24 @@ import java.util.List;
 public class CardPalavraRepository implements ICardPalavra {
 
     CardPalavra _cardPalavra;
+    Prancha _prancha;
     IDB db;
     String _caminho = "cardsPalavras";
+    FilesHelper _filesHelper;
+
 
     public CardPalavraRepository(CardPalavra cardPalavra, Prancha prancha){
+        _cardPalavra = cardPalavra;
+        _prancha = prancha;
         _caminho = _caminho + "\\\\" + prancha.nomeArquivo;
-        _cardPalavra = new CardPalavra(prancha.numeroPrancha, cardPalavra.categoriaCard, cardPalavra.palavraCard, cardPalavra.imagem, cardPalavra.corCard, prancha.numeroPrancha, 1);
         db = new FileHelper(_caminho, _cardPalavra.nomeArquivo);
     }
 
     public void criarCard(){
+        _filesHelper = new FilesHelper(_caminho);
+        int numeroCard = _filesHelper.definirNumeroObjetoAutomaticamente();
+        _cardPalavra = new CardPalavra(numeroCard, _cardPalavra.categoriaCard, _cardPalavra.palavraCard, _cardPalavra.imagem, _cardPalavra.corCard, _cardPalavra.numeroCard, _prancha.numeroPrancha);
+        db = new FileHelper(_caminho, _cardPalavra.nomeArquivo);
         if(db.existe()){
             db.criar();
             List<String> listaString = new CardPalavra().converterCardPalavraParaString(_cardPalavra);
