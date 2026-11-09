@@ -1,11 +1,10 @@
-import UI.InicioUI;
+import UI.App;
+import javafx.application.Application;
 
 public class Main {
     public static void main(String[] args) {
-        //TODO: criar objeto frase -> esse objeto será o responsável por receber as palavras
-
-        new InicioUI();
-
-        System.exit(0);
+        // Main não estende Application de propósito: assim o app roda direto pelo
+        // classpath (IDE ou java -cp) sem precisar de module-info.
+        Application.launch(App.class, args);
     }
 }

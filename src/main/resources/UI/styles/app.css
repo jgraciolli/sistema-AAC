@@ -1,0 +1,241 @@
+/* Estilos baseados no Figma "Protótipo UI Sistema AAC" (tamanhos reduzidos ~60%) */
+
+.root {
+    -fx-font-family: "Inter";
+    -fx-font-size: 13px;
+    -cor-borda: #000000;
+    -cor-botao: #aeadb1;
+    -cor-botao-hover: #9c9ba0;
+    -cor-selecao: #2189de;
+    -cor-texto-secundario: #555555;
+}
+
+/* ---------- Tipografia ---------- */
+.titulo-app     { -fx-font-size: 52px; -fx-text-fill: black; }
+.texto-grande   { -fx-font-size: 22px; -fx-text-fill: black; }
+.texto-pequeno  { -fx-font-size: 12px; -fx-text-fill: black; }
+.mensagem-vazia { -fx-font-size: 16px; -fx-text-fill: -cor-texto-secundario; }
+
+.icone {
+    -fx-font-family: "Material Icons";
+    -fx-font-size: 22px;
+    -fx-text-fill: black;
+}
+
+/* ---------- Telas ---------- */
+.tela { -fx-background-color: white; }
+
+.tela-pranchas {
+    -fx-padding: 16 20 16 20;
+    -fx-spacing: 20;
+}
+
+.tela-prancha {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+.cabecalho-pranchas { -fx-alignment: bottom-left; }
+
+.cabecalho-prancha {
+    -fx-alignment: center-left;
+    -fx-spacing: 14;
+}
+
+.info-prancha { -fx-spacing: 2; }
+
+.barra-busca-cards { -fx-spacing: 20; }
+
+.rolagem,
+.rolagem > .viewport {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.grade {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+/* ---------- Controles ---------- */
+.botao-primario {
+    -fx-background-color: -cor-botao;
+    -fx-background-radius: 0;
+    -fx-font-size: 15px;
+    -fx-text-fill: black;
+    -fx-padding: 8 12 8 12;
+    -fx-cursor: hand;
+}
+.botao-primario:hover { -fx-background-color: -cor-botao-hover; }
+
+.botao-voltar {
+    -fx-font-family: "Material Icons";
+    -fx-font-size: 22px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-color: -cor-borda;
+    -fx-padding: 4;
+    -fx-cursor: hand;
+}
+
+.campo-busca {
+    -fx-font-size: 15px;
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-color: -cor-borda;
+    -fx-border-width: 1;
+    -fx-padding: 6 16 6 16;
+    -fx-prompt-text-fill: black;
+}
+.campo-busca:focused { -fx-prompt-text-fill: #888888; }
+
+/* ---------- Prancha (Figma: Frame 14) ---------- */
+.prancha-tile {
+    -fx-background-color: white;
+    -fx-border-color: -cor-borda;
+    -fx-border-width: 1;
+    -fx-alignment: center;
+    -fx-spacing: 6;
+    -fx-padding: 10 12 10 12;
+    -fx-pref-height: 150px;
+    -fx-min-height: 150px;
+    -fx-max-width: infinity;
+    -fx-cursor: hand;
+}
+.prancha-tile:hover { -fx-background-color: #f2f2f2; }
+
+/* ---------- Card de palavra (Figma: Card de palavra) ---------- */
+.card-palavra {
+    -fx-background-color: white;
+    -fx-border-color: -cor-borda;
+    -fx-border-width: 1;
+    -fx-padding: 8;
+    -fx-pref-height: 262px;
+    -fx-min-height: 262px;
+    -fx-max-width: infinity;
+    -fx-cursor: hand;
+}
+.card-palavra:hover { -fx-background-color: #f7f7f7; }
+
+.card-topo {
+    -fx-spacing: 10;
+    -fx-alignment: top-left;
+}
+
+.card-selecao {
+    -fx-border-color: -cor-borda;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-background-color: white;
+    -fx-padding: 2;
+    -fx-min-width: 20px;  -fx-pref-width: 20px;  -fx-max-width: 20px;
+    -fx-min-height: 20px; -fx-pref-height: 20px; -fx-max-height: 20px;
+}
+.card-selecao-marca {
+    -fx-background-color: -cor-selecao;
+    -fx-min-width: 9px;  -fx-pref-width: 9px;  -fx-max-width: 9px;
+    -fx-min-height: 9px; -fx-pref-height: 9px; -fx-max-height: 9px;
+}
+
+.card-titulo {
+    -fx-min-width: 100px; -fx-pref-width: 100px;
+    -fx-pref-height: 56px; -fx-min-height: 56px;
+}
+
+.card-botoes {
+    -fx-spacing: 8;
+    -fx-alignment: center;
+}
+
+.card-botao-icone {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-color: -cor-borda;
+    -fx-border-width: 1;
+    -fx-padding: 4;
+    -fx-min-width: 44px;  -fx-pref-width: 44px;  -fx-max-width: 44px;
+    -fx-min-height: 44px; -fx-pref-height: 44px; -fx-max-height: 44px;
+    -fx-cursor: hand;
+}
+.card-botao-icone:hover { -fx-background-color: #eeeeee; }
+
+.card-menu {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-min-width: 24px; -fx-pref-width: 24px;
+    -fx-cursor: hand;
+}
+.context-menu .menu-item .label { -fx-font-size: 14px; }
+
+.card-imagem {
+    -fx-background-color: white;
+    -fx-border-color: -cor-borda;
+    -fx-border-width: 1;
+    -fx-pref-height: 140px;
+    -fx-min-height: 140px;
+    -fx-max-height: 140px;
+}
+
+.card-palavra-texto {
+    -fx-pref-height: 32px;
+    -fx-min-height: 32px;
+}
+
+.card-categoria {
+    -fx-alignment: center-right;
+    -fx-padding: 0 6 0 6;
+    -fx-pref-height: 16px;
+    -fx-min-height: 16px;
+}
+
+/* ---------- Frase (Figma: Frame 13) ---------- */
+.frase-barra {
+    -fx-border-color: -cor-borda;
+    -fx-border-width: 1;
+    -fx-padding: 0 10 0 10;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+    -fx-pref-height: 56px;
+    -fx-min-height: 56px;
+    -fx-max-height: 56px;
+}
+.frase-barra .botao-primario { -fx-padding: 6 10 6 10; }
+
+.frase-rolagem,
+.frase-rolagem > .viewport {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.frase-palavras {
+    -fx-spacing: 8;
+    -fx-alignment: center-left;
+}
+
+.frase-palavra {
+    -fx-font-size: 16px;
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-color: -cor-borda;
+    -fx-padding: 4 10 4 10;
+    -fx-cursor: hand;
+}
+.frase-palavra:hover { -fx-background-color: #eeeeee; }
+
+.frase-vazia {
+    -fx-font-size: 14px;
+    -fx-text-fill: -cor-texto-secundario;
+}
+
+/* ---------- Diálogos ---------- */
+.dialog-pane { -fx-font-size: 14px; }
+.dialog-pane .header-panel .label { -fx-font-size: 17px; }
+.dialogo-grade {
+    -fx-hgap: 14;
+    -fx-vgap: 8;
+    -fx-padding: 10 0 0 0;
+}
+.dialogo-grade .text-field { -fx-pref-width: 280px; }
+.dialogo-valor { -fx-font-weight: bold; }

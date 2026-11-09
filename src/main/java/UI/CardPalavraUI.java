@@ -73,7 +73,7 @@ public class CardPalavraUI {
             case 1:visualizarCard();break;
             case 2:atualizarCard();break;
             case 3:excluirCard();break;
-            case 4:_fraseServices.adicionarPalavraDoCardAFrase(_cardPalavra.palavraCard);break;
+            case 4:_fraseServices.adicionarPalavraDoCardAFrase(_cardPalavra);break;
             //case 5: visualizarHistoricoCard();
         }
     }

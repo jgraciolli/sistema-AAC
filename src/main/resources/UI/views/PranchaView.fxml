@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Figma: "Listagem de cards de palavras" (node 1:6), com cabeçalho da prancha acima -->
+
+<?import UI.componentes.FraseBarra?>
+<?import UI.componentes.GradeResponsiva?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="UI.controllers.PranchaController"
+      styleClass="tela, tela-prancha">
+
+    <!-- Problemas 8 e 9: dados da prancha e operações [UD] -->
+    <HBox styleClass="cabecalho-prancha">
+        <Button styleClass="botao-voltar" onAction="#voltar" text="&#xe5c4;"/>
+        <VBox styleClass="info-prancha">
+            <Label fx:id="nomePrancha" styleClass="texto-grande"/>
+            <Label fx:id="detalhesPrancha" styleClass="texto-pequeno"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Editar prancha" styleClass="botao-primario" onAction="#editarPrancha"/>
+        <Button text="Excluir prancha" styleClass="botao-primario" onAction="#excluirPrancha"/>
+    </HBox>
+
+    <HBox styleClass="barra-busca-cards">
+        <!-- TODO: busca de card por número/nome/categoria (versão 0.3.0) -->
+        <TextField promptText="Digite o nome ou número do card" styleClass="campo-busca" HBox.hgrow="ALWAYS" maxHeight="Infinity"/>
+        <Button text="Adicionar card de palavra" styleClass="botao-primario"
+                onAction="#adicionarCard"/>
+    </HBox>
+
+    <Label fx:id="mensagemVazia" text="Nenhum card de palavra nessa prancha." styleClass="mensagem-vazia"/>
+
+    <ScrollPane fitToWidth="true" styleClass="rolagem" VBox.vgrow="ALWAYS">
+        <GradeResponsiva fx:id="gradeCards" larguraMinima="330"/>
+    </ScrollPane>
+
+    <FraseBarra fx:id="fraseBarra"/>
+</VBox>
