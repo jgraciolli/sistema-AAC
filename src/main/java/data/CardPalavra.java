@@ -2,7 +2,6 @@ package data;
 
 import utils.DateTimeHelper;
 
-import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.List;
 
