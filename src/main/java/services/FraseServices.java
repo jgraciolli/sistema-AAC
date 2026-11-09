@@ -4,6 +4,8 @@ import data.CardPalavra;
 import data.Frase;
 import interfaces.IFrase;
 import repositories.FraseRepository;
+import interfaces.IFala;
+import utils.FalaHelper;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class FraseServices {
     //NOTE: uma única instância é compartilhada entre as telas (ver UI.Navegador)
 
     IFrase _fraseRepository;
+    IFala _fala = FalaHelper.instancia();
     Frase _fraseAtual;
 
     public FraseServices() {
@@ -50,7 +53,7 @@ public class FraseServices {
     }
 
     public void reproduzirFrase(){
-        //DOCS: pesquisar biblioteca capaz de reproduzir a frase
+        _fala.falar(_fraseAtual.montarTexto());
     }
 
     //TODO: construir um repositório apenas para imagens

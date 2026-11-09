@@ -1,6 +1,7 @@
 package UI.componentes;
 
 import data.CardPalavra;
+import services.CardPalavraServices;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -36,7 +37,8 @@ public class CardPalavraComponente extends VBox {
         caixaTitulo.getStyleClass().add("card-titulo");
 
         Button adicionarFoto = botaoIcone(Icone.ADICIONAR_FOTO, "Adicionar imagem (versão 0.3.0)");
-        Button reproduzir = botaoIcone(Icone.REPRODUZIR, "Reproduzir palavra (em breve)");
+        Button reproduzir = botaoIcone(Icone.REPRODUZIR, "Reproduzir palavra");
+        reproduzir.setOnAction(e -> new CardPalavraServices().reproduzirPalavra(card));
         HBox botoes = new HBox(adicionarFoto, reproduzir);
         botoes.getStyleClass().add("card-botoes");
         HBox.setHgrow(botoes, Priority.ALWAYS);

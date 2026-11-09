@@ -30,6 +30,9 @@ public class FraseBarra extends HBox {
         rolagem.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         HBox.setHgrow(rolagem, Priority.ALWAYS);
 
+        Button reproduzir = new Button("Reproduzir frase");
+        reproduzir.getStyleClass().add("botao-primario");
+        reproduzir.setOnAction(e -> _fraseServices.reproduzirFrase());
         Button salvar = new Button("Salvar frase");
         Button excluir = new Button("Excluir frase");
         salvar.getStyleClass().add("botao-primario");
@@ -38,7 +41,7 @@ public class FraseBarra extends HBox {
         excluir.setOnAction(e -> excluir());
         status.getStyleClass().add("texto-pequeno");
 
-        getChildren().addAll(rolagem, status, salvar, excluir);
+        getChildren().addAll(rolagem, status, reproduzir, salvar, excluir);
         atualizar();
     }
 

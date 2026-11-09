@@ -1,8 +1,15 @@
 package services;
 
+import data.CardPalavra;
+import interfaces.IFala;
+import utils.FalaHelper;
+
 public class CardPalavraServices {
-    public void reproduzirPalavra(){
-        //DOCS: pesquisar biblioteca capaz de reproduzir uma palavra
+
+    IFala _fala = FalaHelper.instancia();
+
+    public void reproduzirPalavra(CardPalavra cardPalavra){
+        _fala.falar(cardPalavra.palavraCard);
     }
     public void gerarImagensComBaseNasPalavras(){
         //DOCS: pesquisar IA capaz de gerar imagens com base em palavras
