@@ -32,6 +32,12 @@
             <artifactId>jna-platform</artifactId>
             <version>5.15.0</version>
         </dependency>
+        <!-- IA local: escolhe o pictograma do ARASAAC mais adequado ao card -->
+        <dependency>
+            <groupId>io.github.ollama4j</groupId>
+            <artifactId>ollama4j</artifactId>
+            <version>1.1.7</version>
+        </dependency>
     </dependencies>
 
     <build>

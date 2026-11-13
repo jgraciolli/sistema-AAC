@@ -2,11 +2,9 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -24,16 +22,23 @@ public class ImageHelper {
     }
 
     public String gravarImagem(File origem, String nomeCard) throws IOException {
-        String extensao = detectarExtensao(origem);
-
         String nomeOriginal = origem.getName();
         int ponto = nomeOriginal.lastIndexOf('.');
-        String nomeImagem = sanitizar(ponto >= 0 ? nomeOriginal.substring(0, ponto) : nomeOriginal);
-        String nomeFinal = nomeImagem + "_" + LocalDateTime.now().format(FORMATO_DATA) + "_" + nomeCard + "." + extensao;
+        String nomeImagem = ponto >= 0 ? nomeOriginal.substring(0, ponto) : nomeOriginal;
+        return gravarImagem(Files.readAllBytes(origem.toPath()), nomeImagem, nomeCard, nomeOriginal);
+    }
+
+    public String gravarImagem(byte[] conteudo, String nomeImagem, String nomeCard) throws IOException {
+        return gravarImagem(conteudo, nomeImagem, nomeCard, nomeImagem);
+    }
+
+    private String gravarImagem(byte[] conteudo, String nomeImagem, String nomeCard, String nomeExibicao) throws IOException {
+        String extensao = detectarExtensao(conteudo, nomeExibicao);
+        String nomeFinal = sanitizar(nomeImagem) + "_" + LocalDateTime.now().format(FORMATO_DATA) + "_" + nomeCard + "." + extensao;
 
         Files.createDirectories(_pasta);
         Path destino = _pasta.resolve(nomeFinal);
-        Files.copy(origem.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
+        Files.write(destino, conteudo);
         return destino.toString().replace('\\', '/');
     }
 
@@ -54,12 +59,8 @@ public class ImageHelper {
         }
     }
 
-    private String detectarExtensao(File arquivo) throws IOException {
-        byte[] b = new byte[12];
-        int lidos;
-        try (InputStream entrada = Files.newInputStream(arquivo.toPath())) {
-            lidos = entrada.readNBytes(b, 0, b.length);
-        }
+    private String detectarExtensao(byte[] b, String nomeArquivo) throws IOException {
+        int lidos = Math.min(b.length, 12);
         String ascii = new String(b, 0, lidos, StandardCharsets.ISO_8859_1);
 
         if (lidos >= 8 && ascii.startsWith("\u0089PNG")) return "png";
@@ -67,10 +68,10 @@ public class ImageHelper {
         if (ascii.startsWith("GIF8")) return "gif";
         if (ascii.startsWith("BM")) return "bmp";
         if (lidos >= 12 && ascii.startsWith("RIFF") && ascii.startsWith("WEBP", 8)) {
-            throw new IOException("a imagem \"" + arquivo.getName() + "\" está no formato WebP, que o sistema não exibe.\n"
+            throw new IOException("a imagem \"" + nomeArquivo + "\" está no formato WebP, que o sistema não exibe.\n"
                     + "Abra a imagem e salve como PNG ou JPG (por exemplo, pelo Paint) antes de adicionar.");
         }
-        throw new IOException("o arquivo \"" + arquivo.getName() + "\" não é uma imagem PNG, JPG, GIF ou BMP.");
+        throw new IOException("o arquivo \"" + nomeArquivo + "\" não é uma imagem PNG, JPG, GIF ou BMP.");
     }
 
     private String sanitizar(String nome) {

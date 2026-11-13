@@ -2,6 +2,7 @@ package UI.componentes;
 
 import data.CardPalavra;
 import services.CardPalavraServices;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -21,9 +22,11 @@ public class CardPalavraComponente extends VBox {
         void excluir(CardPalavra card);
         void adicionarImagem(CardPalavra card);
         void removerImagem(CardPalavra card);
+        void gerarImagem(CardPalavra card);
     }
 
     private final Region marcaSelecao = new Region();
+    private final StackPane areaImagem = new StackPane();
 
     public CardPalavraComponente(CardPalavra card, Acoes acoes) {
         getStyleClass().add("card-palavra");
@@ -49,15 +52,17 @@ public class CardPalavraComponente extends VBox {
 
         MenuItem visualizar = new MenuItem("Visualizar card");
         MenuItem editar = new MenuItem("Editar card");
+        MenuItem gerarImagem = new MenuItem("Gerar imagem com IA");
         MenuItem excluir = new MenuItem("Excluir card");
         visualizar.setOnAction(e -> acoes.visualizar(card));
         editar.setOnAction(e -> acoes.editar(card));
+        gerarImagem.setOnAction(e -> acoes.gerarImagem(card));
         excluir.setOnAction(e -> acoes.excluir(card));
-        ContextMenu opcoes = new ContextMenu(visualizar, editar, excluir);
+        ContextMenu opcoes = new ContextMenu(visualizar, editar, gerarImagem, excluir);
         if (temImagem) {
             MenuItem removerImagem = new MenuItem("Remover imagem");
             removerImagem.setOnAction(e -> acoes.removerImagem(card));
-            opcoes.getItems().add(2, removerImagem);
+            opcoes.getItems().add(3, removerImagem);
         }
         Button menu = new Button(null, Icone.criar(Icone.MAIS_OPCOES));
         menu.getStyleClass().add("card-menu");
@@ -67,7 +72,6 @@ public class CardPalavraComponente extends VBox {
         topo.getStyleClass().add("card-topo");
 
         // Imagem
-        StackPane areaImagem = new StackPane();
         areaImagem.getStyleClass().add("card-imagem");
         Node imagem = carregarImagem(card.imagem);
         if (imagem != null) areaImagem.getChildren().add(imagem);
@@ -93,6 +97,16 @@ public class CardPalavraComponente extends VBox {
 
     public void marcarSelecionado(boolean selecionado) {
         marcaSelecao.setVisible(selecionado);
+    }
+
+    public void mostrarGerandoImagem() {
+        ProgressIndicator progresso = new ProgressIndicator();
+        progresso.setMaxSize(40, 40);
+        Label texto = new Label("Gerando pictograma...");
+        texto.getStyleClass().add("texto-pequeno");
+        VBox carregando = new VBox(8, progresso, texto);
+        carregando.setAlignment(Pos.CENTER);
+        areaImagem.getChildren().setAll(carregando);
     }
 
     private Button botaoIcone(String icone, String dica) {

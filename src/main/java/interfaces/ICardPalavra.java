@@ -7,7 +7,7 @@ import java.util.List;
 public interface ICardPalavra {
     CardPalavra visualizarCard();
     List<CardPalavra> visualizarHistoricoCard();
-    void criarCard();
+    CardPalavra criarCard();
     void atualizarCard();
     void excluirCard();
 }

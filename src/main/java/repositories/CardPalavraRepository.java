@@ -27,7 +27,7 @@ public class CardPalavraRepository implements ICardPalavra {
         db = new FileHelper(_caminho, _cardPalavra.nomeArquivo);
     }
 
-    public void criarCard(){
+    public CardPalavra criarCard(){
         _filesHelper = new FilesHelper(_caminho);
         int numeroCard = _filesHelper.definirNumeroObjetoAutomaticamente();
         _cardPalavra = new CardPalavra(numeroCard, _cardPalavra.categoriaCard, _cardPalavra.palavraCard, _cardPalavra.imagem, _cardPalavra.corCard, _cardPalavra.numeroCard, _prancha.numeroPrancha);
@@ -37,6 +37,7 @@ public class CardPalavraRepository implements ICardPalavra {
             List<String> listaString = new CardPalavra().converterCardPalavraParaString(_cardPalavra);
             db.escrever(listaString);
         }
+        return _cardPalavra;
     }
 
     public CardPalavra visualizarCard() {

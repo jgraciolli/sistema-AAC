@@ -8,6 +8,7 @@ import data.CardPalavra;
 import data.Prancha;
 import interfaces.ICardPalavra;
 import interfaces.IPrancha;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -24,6 +25,9 @@ import utils.ImageHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 // Problema 8: visualizar prancha [R]
 // Problema 9: operações da prancha [UD]
@@ -37,6 +41,14 @@ public class PranchaController implements CardPalavraComponente.Acoes {
     @FXML private Label mensagemVazia;
     @FXML private FraseBarra fraseBarra;
 
+    private static final ExecutorService GERADOR_IMAGENS = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r, "gerador-imagens");
+        t.setDaemon(true);
+        return t;
+    });
+    private static final Set<String> CARDS_GERANDO_IMAGEM = ConcurrentHashMap.newKeySet();
+    private static PranchaController _controllerAtivo;
+
     private final FraseServices _fraseServices = Navegador.fraseServices();
     private final Map<CardPalavra, CardPalavraComponente> componentes = new LinkedHashMap<>();
     private Prancha _prancha;
@@ -48,6 +60,7 @@ public class PranchaController implements CardPalavraComponente.Acoes {
     }
 
     public void carregarPrancha(Prancha prancha) {
+        _controllerAtivo = this;
         _prancha = prancha;
         exibirPrancha();
         carregarCards();
@@ -104,6 +117,9 @@ public class PranchaController implements CardPalavraComponente.Acoes {
             card.numeroDaPrancha = _prancha.numeroPrancha;
             componentes.put(card, new CardPalavraComponente(card, this));
         }
+        componentes.forEach((card, componente) -> {
+            if (CARDS_GERANDO_IMAGEM.contains(chaveGeracao(_prancha, card))) componente.mostrarGerandoImagem();
+        });
         gradeCards.setItens(new ArrayList<>(componentes.values()));
         mensagemVazia.setVisible(_cards.isEmpty());
         mensagemVazia.setManaged(_cards.isEmpty());
@@ -115,7 +131,8 @@ public class PranchaController implements CardPalavraComponente.Acoes {
         Dialogos.formularioCard("Adicionar card de palavra", "", "").ifPresent(campos -> {
             CardPalavra novo = new CardPalavra(campos[1], campos[0], "", "");
             ICardPalavra cardRepository = new CardPalavraRepository(novo, _prancha);
-            cardRepository.criarCard();
+            CardPalavra criado = cardRepository.criarCard();
+            iniciarGeracaoDeImagem(criado);
             carregarCards();
         });
     }
@@ -181,6 +198,39 @@ public class PranchaController implements CardPalavraComponente.Acoes {
         if (!Dialogos.confirmar("Remover imagem", "A imagem do card \"" + card.palavraCard + "\" será removida. Deseja continuar?")) return;
         new CardPalavraServices().removerImagemDoCard(card, _prancha);
         carregarCards();
+    }
+
+    @Override
+    public void gerarImagem(CardPalavra card) {
+        iniciarGeracaoDeImagem(card);
+        carregarCards();
+    }
+
+    private void iniciarGeracaoDeImagem(CardPalavra card) {
+        Prancha prancha = _prancha;
+        String chave = chaveGeracao(prancha, card);
+        if (!CARDS_GERANDO_IMAGEM.add(chave)) return;
+        GERADOR_IMAGENS.submit(() -> {
+            String erro = null;
+            try {
+                new CardPalavraServices().gerarImagemComBaseNaPalavra(card, prancha);
+            } catch (Exception e) {
+                erro = e.getMessage();
+            }
+            String mensagemErro = erro;
+            Platform.runLater(() -> {
+                CARDS_GERANDO_IMAGEM.remove(chave);
+                PranchaController ativo = _controllerAtivo;
+                if (ativo != null && ativo._prancha.nomeArquivo.equals(prancha.nomeArquivo)) ativo.carregarCards();
+                if (mensagemErro != null) {
+                    Dialogos.erro("Não foi possível gerar a imagem do card \"" + card.palavraCard + "\": " + mensagemErro);
+                }
+            });
+        });
+    }
+
+    private static String chaveGeracao(Prancha prancha, CardPalavra card) {
+        return prancha.nomeArquivo + "/" + card.nomeArquivo;
     }
 
     private void atualizarMarcacoes() {
