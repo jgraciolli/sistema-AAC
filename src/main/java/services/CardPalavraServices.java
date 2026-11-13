@@ -1,8 +1,14 @@
 package services;
 
 import data.CardPalavra;
+import data.Prancha;
 import interfaces.IFala;
+import repositories.CardPalavraRepository;
 import utils.FalaHelper;
+import utils.ImageHelper;
+
+import java.io.File;
+import java.io.IOException;
 
 public class CardPalavraServices {
 
@@ -15,10 +21,22 @@ public class CardPalavraServices {
         //DOCS: pesquisar IA capaz de gerar imagens com base em palavras
     }
 
-    public void atribuirImagemAoCard(){
-        //TODO: (parametro) receber nome do card
-        //TODO: atualizar nome da imagem com base no card
-        //OBS: (nome_imagem)_(data_atual)_(nome_card).(tipo_imagem)
+    //OBS: (nome_imagem)_(data_atual)_(nome_card).(tipo_imagem)
+    public void atribuirImagemAoCard(CardPalavra cardPalavra, Prancha prancha, File imagemOrigem) throws IOException {
+        String imagemAnterior = cardPalavra.imagem;
+        String novaImagem = new ImageHelper(prancha.nomeArquivo).gravarImagem(imagemOrigem, cardPalavra.nomeArquivo);
+        cardPalavra.imagem = novaImagem;
+        new CardPalavraRepository(cardPalavra, prancha).atualizarCard();
+        if (imagemAnterior != null && !imagemAnterior.equals(novaImagem)) {
+            ImageHelper.excluirImagem(imagemAnterior);
+        }
+    }
+
+    public void removerImagemDoCard(CardPalavra cardPalavra, Prancha prancha){
+        String imagemAnterior = cardPalavra.imagem;
+        cardPalavra.imagem = "";
+        new CardPalavraRepository(cardPalavra, prancha).atualizarCard();
+        ImageHelper.excluirImagem(imagemAnterior);
     }
 
     public void reordenarCardsNaPrancha(){

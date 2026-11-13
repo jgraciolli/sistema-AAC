@@ -16,8 +16,13 @@ import UI.componentes.GradeResponsiva;
 import repositories.CardPalavraRepository;
 import repositories.CardsPalavraRepository;
 import repositories.PranchaRepository;
+import javafx.stage.FileChooser;
+import services.CardPalavraServices;
 import services.FraseServices;
+import utils.ImageHelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 // Problema 8: visualizar prancha [R]
@@ -151,6 +156,30 @@ public class PranchaController implements CardPalavraComponente.Acoes {
         if (!Dialogos.confirmar("Excluir card", "O card \"" + card.palavraCard + "\" será excluído. Deseja continuar?")) return;
         ICardPalavra cardRepository = new CardPalavraRepository(card, _prancha);
         cardRepository.excluirCard();
+        carregarCards();
+    }
+
+    @Override
+    public void adicionarImagem(CardPalavra card) {
+        FileChooser seletor = new FileChooser();
+        seletor.setTitle("Escolher imagem para \"" + card.palavraCard + "\"");
+        List<String> filtros = ImageHelper.EXTENSOES.stream().map(ext -> "*." + ext).toList();
+        seletor.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", filtros));
+        File escolhida = seletor.showOpenDialog(Navegador.stage());
+        if (escolhida == null) return;
+        try {
+            new CardPalavraServices().atribuirImagemAoCard(card, _prancha, escolhida);
+        } catch (IOException e) {
+            Dialogos.erro("Não foi possível adicionar a imagem: " + e.getMessage());
+            return;
+        }
+        carregarCards();
+    }
+
+    @Override
+    public void removerImagem(CardPalavra card) {
+        if (!Dialogos.confirmar("Remover imagem", "A imagem do card \"" + card.palavraCard + "\" será removida. Deseja continuar?")) return;
+        new CardPalavraServices().removerImagemDoCard(card, _prancha);
         carregarCards();
     }
 

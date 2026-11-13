@@ -4,6 +4,7 @@ import data.Prancha;
 import interfaces.IPrancha;
 import utils.FileHelper;
 import utils.FilesHelper;
+import utils.ImageHelper;
 
 import java.util.*;
 
@@ -56,5 +57,6 @@ public class PranchaRepository implements IPrancha {
     public void excluirPrancha(){
         _fileHelper.excluir();
         _filesHelper.excluirPasta();
+        new ImageHelper(_prancha.nomeArquivo).excluirPasta();
     }
 }

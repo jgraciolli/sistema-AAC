@@ -6,6 +6,7 @@ import data.Prancha;
 import interfaces.ICardPalavra;
 import utils.FileHelper;
 import utils.FilesHelper;
+import utils.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class CardPalavraRepository implements ICardPalavra {
 
     public void excluirCard(){
         db.excluir();
+        ImageHelper.excluirImagem(_cardPalavra.imagem);
     }
 
     public List<CardPalavra> visualizarHistoricoCard() {

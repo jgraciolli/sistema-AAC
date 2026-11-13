@@ -19,6 +19,8 @@ public class CardPalavraComponente extends VBox {
         void visualizar(CardPalavra card);
         void editar(CardPalavra card);
         void excluir(CardPalavra card);
+        void adicionarImagem(CardPalavra card);
+        void removerImagem(CardPalavra card);
     }
 
     private final Region marcaSelecao = new Region();
@@ -36,7 +38,9 @@ public class CardPalavraComponente extends VBox {
         StackPane caixaTitulo = new StackPane(titulo);
         caixaTitulo.getStyleClass().add("card-titulo");
 
-        Button adicionarFoto = botaoIcone(Icone.ADICIONAR_FOTO, "Adicionar imagem (versão 0.3.0)");
+        boolean temImagem = card.imagem != null && !card.imagem.isBlank();
+        Button adicionarFoto = botaoIcone(Icone.ADICIONAR_FOTO, temImagem ? "Trocar imagem" : "Adicionar imagem");
+        adicionarFoto.setOnAction(e -> acoes.adicionarImagem(card));
         Button reproduzir = botaoIcone(Icone.REPRODUZIR, "Reproduzir palavra");
         reproduzir.setOnAction(e -> new CardPalavraServices().reproduzirPalavra(card));
         HBox botoes = new HBox(adicionarFoto, reproduzir);
@@ -50,6 +54,11 @@ public class CardPalavraComponente extends VBox {
         editar.setOnAction(e -> acoes.editar(card));
         excluir.setOnAction(e -> acoes.excluir(card));
         ContextMenu opcoes = new ContextMenu(visualizar, editar, excluir);
+        if (temImagem) {
+            MenuItem removerImagem = new MenuItem("Remover imagem");
+            removerImagem.setOnAction(e -> acoes.removerImagem(card));
+            opcoes.getItems().add(2, removerImagem);
+        }
         Button menu = new Button(null, Icone.criar(Icone.MAIS_OPCOES));
         menu.getStyleClass().add("card-menu");
         menu.setOnAction(e -> opcoes.show(menu, Side.BOTTOM, 0, 0));
@@ -95,7 +104,11 @@ public class CardPalavraComponente extends VBox {
 
     private Node carregarImagem(String caminho) {
         if (caminho == null || caminho.isBlank() || !new File(caminho).isFile()) return null;
-        ImageView view = new ImageView(new Image(new File(caminho).toURI().toString(), 120, 120, true, true));
+        Image imagem = new Image(new File(caminho).toURI().toString(), 120, 120, true, true);
+        imagem.errorProperty().addListener((obs, antes, erro) -> {
+            if (erro) System.out.println("Não foi possível exibir a imagem " + caminho + ": " + imagem.getException());
+        });
+        ImageView view = new ImageView(imagem);
         view.setFitWidth(120);
         view.setFitHeight(120);
         view.setPreserveRatio(true);
