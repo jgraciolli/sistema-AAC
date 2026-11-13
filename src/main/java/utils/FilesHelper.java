@@ -2,7 +2,6 @@ package utils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.List;
 
 //NOTE: esse helper é descartável quando inserido o banco de dados
@@ -17,15 +16,14 @@ public class FilesHelper {
     }
 
     public File[] consultarVariosArquivos() {
-        File[] listaArquivos = new File[0];
-        try{
-            File file = new File(_caminho);
-            listaArquivos = file.listFiles();
-            return listaArquivos;
-        }catch (EmptyStackException ex){
-            System.out.println("Diretório não possui arquivos");;
+        File pasta = new File(_caminho);
+        if (!pasta.isDirectory()) {
+            //RN: na primeira execução a pasta ainda não existe, então ela é criada vazia
+            criarPasta();
         }
-        return listaArquivos;
+        File[] listaArquivos = pasta.listFiles();
+        //NOTE: listFiles() retorna null (e não um array vazio) quando não consegue ler a pasta
+        return listaArquivos != null ? listaArquivos : new File[0];
     }
 
     //TODO: corrigir valor
